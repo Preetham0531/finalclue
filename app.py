@@ -62,19 +62,6 @@ st.markdown("""
             width: 0 !important;
             opacity: 0 !important;
         }
-        /* Hide GitHub links and profile references */
-        a[href*="github"],
-        a[href*="preetham"],
-        [class*="github"],
-        [id*="github"],
-        [class*="preetham"],
-        [id*="preetham"] {
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            height: 0 !important;
-            width: 0 !important;
-        }
     </style>
     <script>
         // Ultra-aggressive JavaScript to remove ALL branding and username references
