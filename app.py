@@ -19,7 +19,7 @@ st.markdown("""
         [data-testid="stAppViewContainer"] {
             background-color: white !important;
         }
-        h1.well-done, .well-done, h1 {
+        h1.well-done, .well-done {
             font-size: 8rem !important;
             font-weight: 700 !important;
             text-align: center !important;
