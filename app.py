@@ -42,10 +42,24 @@ st.markdown("""
             line-height: 1.2 !important;
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) !important;
         }
-        /* Hide Streamlit default elements */
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
+        /* Hide Streamlit default elements and branding */
+        #MainMenu {visibility: hidden !important;}
+        footer {visibility: hidden !important;}
+        header {visibility: hidden !important;}
+        [data-testid="stHeader"] {visibility: hidden !important; height: 0 !important;}
+        [data-testid="stToolbar"] {visibility: hidden !important; height: 0 !important;}
+        [data-testid="stDecoration"] {visibility: hidden !important; height: 0 !important;}
+        .stDeployButton {display: none !important;}
+        #stDecoration {display: none !important;}
+        footer {display: none !important;}
+        header {display: none !important;}
+        /* Hide "Made with Streamlit" */
+        .stApp > footer {visibility: hidden !important; height: 0 !important; display: none !important;}
+        .stApp > header {visibility: hidden !important; height: 0 !important; display: none !important;}
+        /* Hide any remaining Streamlit branding */
+        [data-testid="stAppViewContainer"] > footer {display: none !important; visibility: hidden !important;}
+        [data-testid="stAppViewContainer"] > header {display: none !important; visibility: hidden !important;}
+        iframe[title="stAppFrame"] {border: none !important;}
     </style>
 """, unsafe_allow_html=True)
 
