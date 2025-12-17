@@ -42,10 +42,10 @@ st.markdown("""
             line-height: 1.2 !important;
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) !important;
         }
-        /* Hide Streamlit default elements and ALL branding */
-        #MainMenu {visibility: hidden !important; display: none !important;}
-        footer {visibility: hidden !important; display: none !important; height: 0 !important;}
-        header {visibility: hidden !important; display: none !important; height: 0 !important;}
+        /* Hide Streamlit default elements */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
         [data-testid="stHeader"] {visibility: hidden !important; display: none !important; height: 0 !important;}
         [data-testid="stToolbar"] {visibility: hidden !important; display: none !important; height: 0 !important;}
         [data-testid="stDecoration"] {visibility: hidden !important; display: none !important; height: 0 !important;}
