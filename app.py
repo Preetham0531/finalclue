@@ -1,4 +1,36 @@
 import streamlit as st
+from datetime import datetime, timedelta
+
+# Set deployment date (update this when you deploy)
+DEPLOYMENT_DATE = datetime(2025, 12, 17)  # Update this to today's date
+EXPIRATION_DAYS = 3
+EXPIRATION_DATE = DEPLOYMENT_DATE + timedelta(days=EXPIRATION_DAYS)
+
+# Check if app has expired
+if datetime.now() > EXPIRATION_DATE:
+    st.set_page_config(
+        page_title="Expired",
+        page_icon="💐",
+        layout="centered"
+    )
+    st.markdown("""
+        <style>
+            .main {
+                background-color: white !important;
+            }
+            .stApp {
+                background-color: white !important;
+            }
+            .expired {
+                text-align: center;
+                font-size: 3rem;
+                color: #666;
+                margin-top: 20%;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    st.markdown('<div class="expired">This app has expired.</div>', unsafe_allow_html=True)
+    st.stop()
 
 # Page configuration
 st.set_page_config(
