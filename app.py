@@ -23,7 +23,7 @@ st.markdown("""
             font-size: 8rem;
             font-weight: 700;
             text-align: center;
-            color: #000000;
+            color: #FF0000;
             margin-bottom: 3rem;
             letter-spacing: 3px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
