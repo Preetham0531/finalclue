@@ -11,36 +11,36 @@ st.set_page_config(
 st.markdown("""
     <style>
         .main {
-            background-color: white;
+            background-color: white !important;
         }
         .stApp {
-            background-color: white;
+            background-color: white !important;
         }
         [data-testid="stAppViewContainer"] {
-            background-color: white;
+            background-color: white !important;
         }
-        .well-done {
-            font-size: 8rem;
-            font-weight: 700;
-            text-align: center;
-            color: #FF0000;
-            margin-bottom: 3rem;
-            letter-spacing: 3px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            padding-top: 2rem;
+        h1.well-done, .well-done, h1 {
+            font-size: 8rem !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            color: #FF0000 !important;
+            margin-bottom: 3rem !important;
+            letter-spacing: 3px !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+            padding-top: 2rem !important;
         }
         .bouquet-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 2rem;
-            padding: 2rem;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            margin-top: 2rem !important;
+            padding: 2rem !important;
         }
         .bouquet {
-            font-size: 10rem;
-            text-align: center;
-            line-height: 1.2;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            font-size: 10rem !important;
+            text-align: center !important;
+            line-height: 1.2 !important;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) !important;
         }
         /* Hide Streamlit default elements */
         #MainMenu {visibility: hidden;}
@@ -49,8 +49,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Main content
-st.markdown('<h1 class="well-done">well done</h1>', unsafe_allow_html=True)
+# Main content - using inline style as backup
+st.markdown('<h1 class="well-done" style="color: #FF0000 !important; font-size: 8rem !important; font-weight: 700 !important; text-align: center !important;">well done</h1>', unsafe_allow_html=True)
 
 # Bouquet logo/emoji - using a beautiful bouquet emoji
 st.markdown("""
