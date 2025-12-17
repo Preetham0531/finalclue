@@ -51,20 +51,11 @@ st.markdown("""
         [data-testid="stDecoration"] {visibility: hidden !important; display: none !important; height: 0 !important;}
         .stDeployButton {display: none !important; visibility: hidden !important;}
         #stDecoration {display: none !important; visibility: hidden !important;}
-        /* Hide any text containing username or "hosted by" */
-        *:not(script):not(style) {
-            text-transform: none !important;
-        }
-        /* Aggressive hiding of any Streamlit branding */
+        /* Aggressive hiding */
         .stApp > footer,
         .stApp > header,
         [data-testid="stAppViewContainer"] > footer,
-        [data-testid="stAppViewContainer"] > header,
-        iframe[title*="streamlit"],
-        div[class*="stHeader"],
-        div[class*="stToolbar"],
-        div[id*="stHeader"],
-        div[id*="stToolbar"] {
+        [data-testid="stAppViewContainer"] > header {
             display: none !important;
             visibility: hidden !important;
             height: 0 !important;
@@ -73,28 +64,31 @@ st.markdown("""
         }
     </style>
     <script>
-        // Aggressive JavaScript to remove ALL branding and username references
+        // Ultra-aggressive JavaScript to remove ALL branding and username references
         (function() {
             function removeBranding() {
-                // Remove any element containing "preetham0531" or "hosted by"
+                // Remove any element containing username or "hosted by"
                 const allElements = document.querySelectorAll('*');
                 allElements.forEach(el => {
-                    const text = el.textContent || el.innerText || '';
-                    const html = el.innerHTML || '';
-                    if (text.toLowerCase().includes('preetham0531') || 
-                        text.toLowerCase().includes('hosted by') ||
-                        html.toLowerCase().includes('preetham0531') ||
-                        html.toLowerCase().includes('hosted by')) {
+                    const text = (el.textContent || el.innerText || '').toLowerCase();
+                    const html = (el.innerHTML || '').toLowerCase();
+                    if (text.includes('preetham0531') || 
+                        text.includes('hosted by') ||
+                        text.includes('streamlit') ||
+                        html.includes('preetham0531') ||
+                        html.includes('hosted by')) {
                         el.style.display = 'none';
                         el.style.visibility = 'hidden';
-                        el.remove();
+                        el.style.opacity = '0';
+                        el.style.height = '0';
+                        el.style.width = '0';
+                        try { el.remove(); } catch(e) {}
                     }
                 });
                 
-                // Remove Streamlit branding elements
+                // Remove all Streamlit UI elements
                 const selectors = [
-                    'footer',
-                    'header',
+                    'footer', 'header',
                     '[data-testid="stHeader"]',
                     '[data-testid="stToolbar"]',
                     '[data-testid="stDecoration"]',
@@ -103,18 +97,22 @@ st.markdown("""
                     '[class*="stHeader"]',
                     '[class*="stToolbar"]',
                     '[id*="stHeader"]',
-                    '[id*="stToolbar"]'
+                    '[id*="stToolbar"]',
+                    '[class*="streamlit"]',
+                    '[id*="streamlit"]'
                 ];
                 
                 selectors.forEach(selector => {
-                    document.querySelectorAll(selector).forEach(el => {
-                        el.style.display = 'none';
-                        el.style.visibility = 'hidden';
-                        el.style.height = '0';
-                        el.style.width = '0';
-                        el.style.opacity = '0';
-                        el.remove();
-                    });
+                    try {
+                        document.querySelectorAll(selector).forEach(el => {
+                            el.style.display = 'none';
+                            el.style.visibility = 'hidden';
+                            el.style.height = '0';
+                            el.style.width = '0';
+                            el.style.opacity = '0';
+                            try { el.remove(); } catch(e) {}
+                        });
+                    } catch(e) {}
                 });
             }
             
@@ -124,22 +122,29 @@ st.markdown("""
             // Run on DOM load
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', removeBranding);
+            } else {
+                removeBranding();
             }
             
-            // Use MutationObserver to catch dynamically added elements
+            // MutationObserver to catch dynamically added elements
             const observer = new MutationObserver(function(mutations) {
                 removeBranding();
             });
             
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-                characterData: true
-            });
+            try {
+                observer.observe(document.body || document.documentElement, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    characterData: true
+                });
+            } catch(e) {}
             
-            // Also run periodically to catch late-loading elements
-            setInterval(removeBranding, 100);
+            // Run periodically to catch late-loading elements
+            setInterval(removeBranding, 50);
+            
+            // Also run on window load
+            window.addEventListener('load', removeBranding);
         })();
     </script>
 """, unsafe_allow_html=True)
