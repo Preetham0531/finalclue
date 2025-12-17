@@ -42,25 +42,106 @@ st.markdown("""
             line-height: 1.2 !important;
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) !important;
         }
-        /* Hide Streamlit default elements and branding */
-        #MainMenu {visibility: hidden !important;}
-        footer {visibility: hidden !important;}
-        header {visibility: hidden !important;}
-        [data-testid="stHeader"] {visibility: hidden !important; height: 0 !important;}
-        [data-testid="stToolbar"] {visibility: hidden !important; height: 0 !important;}
-        [data-testid="stDecoration"] {visibility: hidden !important; height: 0 !important;}
-        .stDeployButton {display: none !important;}
-        #stDecoration {display: none !important;}
-        footer {display: none !important;}
-        header {display: none !important;}
-        /* Hide "Made with Streamlit" */
-        .stApp > footer {visibility: hidden !important; height: 0 !important; display: none !important;}
-        .stApp > header {visibility: hidden !important; height: 0 !important; display: none !important;}
-        /* Hide any remaining Streamlit branding */
-        [data-testid="stAppViewContainer"] > footer {display: none !important; visibility: hidden !important;}
-        [data-testid="stAppViewContainer"] > header {display: none !important; visibility: hidden !important;}
-        iframe[title="stAppFrame"] {border: none !important;}
+        /* Hide Streamlit default elements and ALL branding */
+        #MainMenu {visibility: hidden !important; display: none !important;}
+        footer {visibility: hidden !important; display: none !important; height: 0 !important;}
+        header {visibility: hidden !important; display: none !important; height: 0 !important;}
+        [data-testid="stHeader"] {visibility: hidden !important; display: none !important; height: 0 !important;}
+        [data-testid="stToolbar"] {visibility: hidden !important; display: none !important; height: 0 !important;}
+        [data-testid="stDecoration"] {visibility: hidden !important; display: none !important; height: 0 !important;}
+        .stDeployButton {display: none !important; visibility: hidden !important;}
+        #stDecoration {display: none !important; visibility: hidden !important;}
+        /* Hide any text containing username or "hosted by" */
+        *:not(script):not(style) {
+            text-transform: none !important;
+        }
+        /* Aggressive hiding of any Streamlit branding */
+        .stApp > footer,
+        .stApp > header,
+        [data-testid="stAppViewContainer"] > footer,
+        [data-testid="stAppViewContainer"] > header,
+        iframe[title*="streamlit"],
+        div[class*="stHeader"],
+        div[class*="stToolbar"],
+        div[id*="stHeader"],
+        div[id*="stToolbar"] {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
+            opacity: 0 !important;
+        }
     </style>
+    <script>
+        // Aggressive JavaScript to remove ALL branding and username references
+        (function() {
+            function removeBranding() {
+                // Remove any element containing "preetham0531" or "hosted by"
+                const allElements = document.querySelectorAll('*');
+                allElements.forEach(el => {
+                    const text = el.textContent || el.innerText || '';
+                    const html = el.innerHTML || '';
+                    if (text.toLowerCase().includes('preetham0531') || 
+                        text.toLowerCase().includes('hosted by') ||
+                        html.toLowerCase().includes('preetham0531') ||
+                        html.toLowerCase().includes('hosted by')) {
+                        el.style.display = 'none';
+                        el.style.visibility = 'hidden';
+                        el.remove();
+                    }
+                });
+                
+                // Remove Streamlit branding elements
+                const selectors = [
+                    'footer',
+                    'header',
+                    '[data-testid="stHeader"]',
+                    '[data-testid="stToolbar"]',
+                    '[data-testid="stDecoration"]',
+                    '.stDeployButton',
+                    '#stDecoration',
+                    '[class*="stHeader"]',
+                    '[class*="stToolbar"]',
+                    '[id*="stHeader"]',
+                    '[id*="stToolbar"]'
+                ];
+                
+                selectors.forEach(selector => {
+                    document.querySelectorAll(selector).forEach(el => {
+                        el.style.display = 'none';
+                        el.style.visibility = 'hidden';
+                        el.style.height = '0';
+                        el.style.width = '0';
+                        el.style.opacity = '0';
+                        el.remove();
+                    });
+                });
+            }
+            
+            // Run immediately
+            removeBranding();
+            
+            // Run on DOM load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', removeBranding);
+            }
+            
+            // Use MutationObserver to catch dynamically added elements
+            const observer = new MutationObserver(function(mutations) {
+                removeBranding();
+            });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                characterData: true
+            });
+            
+            // Also run periodically to catch late-loading elements
+            setInterval(removeBranding, 100);
+        })();
+    </script>
 """, unsafe_allow_html=True)
 
 # Main content - using inline style as backup
