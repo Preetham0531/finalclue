@@ -58,3 +58,13 @@ st.markdown("""
         <div class="bouquet">💐</div>
     </div>
 """, unsafe_allow_html=True)
+
+# QR Code display using online API
+app_url = "https://ihavebeenexpectingyou.streamlit.app/"
+qr_code_url = f"https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={app_url}"
+
+st.markdown("""
+    <div style="display: flex; justify-content: center; margin-top: 2rem;">
+        <img src="{}" alt="QR Code" style="border: 2px solid #ddd; border-radius: 10px; padding: 10px; background: white;">
+    </div>
+""".format(qr_code_url), unsafe_allow_html=True)
