@@ -3,7 +3,7 @@ import streamlit as st
 # Page configuration
 st.set_page_config(
     page_title="Well Done",
-    page_icon="🌸",
+    page_icon="💐",
     layout="centered"
 )
 
