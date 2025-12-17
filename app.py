@@ -58,4 +58,3 @@ st.markdown("""
         <div class="bouquet">💐</div>
     </div>
 """, unsafe_allow_html=True)
-
